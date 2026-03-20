@@ -14,7 +14,8 @@ def resolver_sistema():
         x = np.linalg.solve(A, b)
         print("Solución del sistema:")
         for i, valor in enumerate(x, start=1):
-            print(f"x{i} = {valor :. 4f}")
+            # CORRECCIÓN: Se eliminó el espacio en ":.4f"
+            print(f"x{i} = {valor:.4f}")
         return x
     except np.linalg.LinAlgError:
         print("El sistema no tiene solución o tiene infinitas soluciones.")
@@ -30,9 +31,10 @@ def graficar_soluciones(soluciones):
         plt.title("Soluciones del Sistema de Ecuaciones")
         plt.xlabel("Variables")
         plt.ylabel("Valores")
-        plt.grid(axis='y', linestyle=' -- ', alpha=0.7)
+        # CORRECCIÓN: Se eliminaron los espacios en '--'
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
 
-        # Guardar el gráfico como imagen
+        # Guardar el gráfico como imagen (Esto es vital para Jenkins)
         plt.savefig("soluciones.png")
         plt.close()
         print("Gráfico guardado como 'soluciones.png'")
@@ -43,12 +45,13 @@ def guardar_resultados_csv(soluciones):
     if soluciones is not None:
         print("Guardando resultados en un archivo CSV ... ")
 
-# Escribir las soluciones en un archivo CSV
+        # Escribir las soluciones en un archivo CSV
         with open("resultados.csv", mode="w", newline="") as archivo:
             escritor = csv.writer(archivo)
             escritor.writerow(["Variable", "Valor"])
             for i, valor in enumerate(soluciones, start=1):
-                escritor.writerow([f"x{i}", f"{valor :. 4f}"])
+                # CORRECCIÓN: Se eliminó el espacio en ":.4f"
+                escritor.writerow([f"x{i}", f"{valor:.4f}"])
 
         print("Resultados guardados en 'resultados.csv'")
     else:
